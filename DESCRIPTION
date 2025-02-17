@@ -1,12 +1,9 @@
-Package: painel.alertas
-Title: An Amazing Shiny App
+Package: painel_alertas_cie
+Title: Painel_de_Alertas
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "firstname",
-           family = "lastname",
-           role = c("aut", "cre"),
-           email = "your@email.com")
-Description: What the package does (one paragraph).
+    person("CIE", "Rio", , "camposvieiragabriel@gmail.com")
+Description: Painel de alertas epidemiologicos do CIE Rio
 License: What license is it under?
 Imports: 
     config,

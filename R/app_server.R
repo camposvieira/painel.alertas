@@ -4,6 +4,11 @@
 #'     DO NOT REMOVE.
 #' @import shiny
 #' @noRd
+# R/app_server.R
 app_server <- function(input, output, session) {
-  # Your application server logic
+  mod_home_page_server("home_page")
+
+  output$info <- renderText({
+    paste("A aba selecionada é:", input$tabs)
+  })
 }

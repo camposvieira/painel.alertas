@@ -1,41 +1,33 @@
+# R/app_ui.R
+
 #' The application User-Interface
 #'
 #' @param request Internal parameter for `{shiny}`.
 #'     DO NOT REMOVE.
 #' @import shiny
 #' @noRd
+# R/app_ui.R
+# R/app_ui.R
 app_ui <- function(request) {
   tagList(
-    # Leave this function for adding external resources
     golem_add_external_resources(),
-    # Your application UI logic
     fluidPage(
-      golem::golem_welcome_page() # Remove this line to start building your UI
+      titlePanel("Painel de Alertas em Saúde"),
+      sidebarLayout(
+        sidebarPanel(
+          h4("Menu"),
+          tabsetPanel(
+            id = "tabs",
+            tabPanel("Início", mod_home_page_ui("home_page"))
+          )
+        ),
+        mainPanel(
+          h3("Visualizações"),
+          verbatimTextOutput("info")
+        )
+      )
     )
   )
 }
 
-#' Add external Resources to the Application
-#'
-#' This function is internally used to add external
-#' resources inside the Shiny application.
-#'
-#' @import shiny
-#' @importFrom golem add_resource_path activate_js favicon bundle_resources
-#' @noRd
-golem_add_external_resources <- function() {
-  add_resource_path(
-    "www",
-    app_sys("app/www")
-  )
 
-  tags$head(
-    favicon(),
-    bundle_resources(
-      path = app_sys("app/www"),
-      app_title = "painel.alertas"
-    )
-    # Add here other external resources
-    # for example, you can add shinyalert::useShinyalert()
-  )
-}

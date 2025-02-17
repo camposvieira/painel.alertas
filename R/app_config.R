@@ -9,7 +9,7 @@
 #'
 #' @noRd
 app_sys <- function(...) {
-  system.file(..., package = "painel.alertas")
+  system.file(..., package = "painel_alertas_cie")
 }
 
 
