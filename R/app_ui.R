@@ -8,26 +8,16 @@
 #' @noRd
 # R/app_ui.R
 # R/app_ui.R
+# R/app_ui.R
+library(shiny)
+library(bslib)
+
 app_ui <- function(request) {
   tagList(
     golem_add_external_resources(),
     fluidPage(
-      titlePanel("Painel de Alertas em Saúde"),
-      sidebarLayout(
-        sidebarPanel(
-          h4("Menu"),
-          tabsetPanel(
-            id = "tabs",
-            tabPanel("Início", mod_home_page_ui("home_page"))
-          )
-        ),
-        mainPanel(
-          h3("Visualizações"),
-          verbatimTextOutput("info")
-        )
-      )
+      theme = bslib::bs_theme(bootswatch = "minty"), # Tema moderno
+      mod_home_page_ui("home_page")
     )
   )
 }
-
-

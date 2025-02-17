@@ -1,1 +1,12 @@
- 
+
+.hero {
+  background-image: url('https://source.unsplash.com/1600x900/?health');
+  background-size: cover;
+  color: white;
+  padding: 120px 15px;
+  font-size: 24px;
+}
+.value-box .small-box {
+  border-radius: 15px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+}

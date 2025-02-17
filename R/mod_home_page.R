@@ -9,86 +9,92 @@
 #' @importFrom shiny NS tagList
 # UI do módulo
 # R/mod_home_page.R
+# R/mod_home_page.R
 
-# UI do módulo
+library(shiny)
+library(shinydashboard)
+library(bslib) # Para temas modernos com Bootstrap 5
+
 mod_home_page_ui <- function(id) {
   ns <- NS(id)
   tagList(
-    fluidRow(
-      column(
-        width = 3,
-        wellPanel(
-          h4("Filtros"),
-          selectInput(ns("select_pkg"), "Selecione um Pacote:", choices = NULL),
-          sliderInput(ns("date_range"), "Período:",
-                      min = as.Date("2022-01-01"),
-                      max = Sys.Date(),
-                      value = c(as.Date("2023-01-01"), Sys.Date())),
-          actionButton(ns("apply_filters"), "Aplicar Filtros", icon = icon("filter"))
-        )
-      ),
-      column(
-        width = 9,
-        tabsetPanel(
-          tabPanel(
-            "Resumo",
-            h4("Resumo Geral"),
-            fluidRow(
-              column(6, valueBoxOutput(ns("total_downloads"))),
-              column(6, valueBoxOutput(ns("unique_users")))
-            ),
-            plotOutput(ns("download_trend"))
-          ),
-          tabPanel(
-            "Detalhes",
-            h4("Detalhes das Consultas"),
-            DT::dataTableOutput(ns("detail_table"))
-          )
+    # Navbar estilo Colorlib
+    tags$nav(
+      class = "navbar navbar-expand-lg navbar-dark bg-primary",
+      style = "padding: 1rem;",
+      tags$a(class = "navbar-brand", href = "#", "Painel de Alertas"),
+      tags$div(
+        class = "collapse navbar-collapse",
+        tags$ul(
+          class = "navbar-nav ml-auto",
+          tags$li(class = "nav-item", tags$a(class = "nav-link", href = "#", "Início")),
+          tags$li(class = "nav-item", tags$a(class = "nav-link", href = "#", "Sobre")),
+          tags$li(class = "nav-item", tags$a(class = "nav-link", href = "#", "Contato"))
         )
       )
+    ),
+
+    # Hero Section
+    div(
+      class = "hero bg-light text-center py-5",
+      style = "background-color:#f8f9fa;",
+      h1("Bem-vindo ao Painel de Alertas"),
+      p("Monitoramento de eventos em saúde pública em tempo real."),
+      actionButton(ns("explore_btn"), "Explore Agora", class = "btn btn-primary btn-lg")
+    ),
+
+    # Cards de Métricas Principais
+    fluidRow(
+      column(
+        width = 4,
+        valueBoxOutput(ns("total_alerts"), width = 12)
+      ),
+      column(
+        width = 4,
+        valueBoxOutput(ns("new_cases"), width = 12)
+      ),
+      column(
+        width = 4,
+        valueBoxOutput(ns("critical_events"), width = 12)
+      )
+    ),
+
+    # Rodapé
+    tags$footer(
+      class = "text-center text-white py-3",
+      style = "background-color:#2c3e50;",
+      "© 2025 - Painel de Alertas | Desenvolvido por Gabriel"
     )
   )
 }
 
-# Server do módulo
 mod_home_page_server <- function(id) {
   moduleServer(id, function(input, output, session) {
-
-    # Simulação de dados
-    downloads <- reactive({
-      Sys.sleep(0.5) # Simula processamento
-      data.frame(
-        data = seq.Date(from = as.Date("2023-01-01"), to = Sys.Date(), by = "day"),
-        downloads = rpois(length(seq.Date(from = as.Date("2023-01-01"), to = Sys.Date(), by = "day")), lambda = 100)
-      )
-    })
-
-    output$total_downloads <- renderValueBox({
+    output$total_alerts <- renderValueBox({
       valueBox(
-        value = sum(downloads()$downloads),
-        subtitle = "Total de Downloads",
-        icon = icon("download"),
-        color = "blue"
+        value = "1,234",
+        subtitle = "Alertas Totais",
+        icon = icon("bell"),
+        color = "purple"
       )
     })
 
-    output$unique_users <- renderValueBox({
+    output$new_cases <- renderValueBox({
       valueBox(
-        value = sample(500:1000, 1),
-        subtitle = "Usuários Únicos",
-        icon = icon("users"),
-        color = "green"
+        value = "89",
+        subtitle = "Novos Casos Hoje",
+        icon = icon("heartbeat"),
+        color = "red"
       )
     })
 
-    output$download_trend <- renderPlot({
-      plot(downloads()$data, downloads()$downloads, type = "l", col = "blue",
-           main = "Tendência de Downloads",
-           xlab = "Data", ylab = "Downloads")
-    })
-
-    output$detail_table <- DT::renderDataTable({
-      head(downloads(), 20)
+    output$critical_events <- renderValueBox({
+      valueBox(
+        value = "5",
+        subtitle = "Eventos Críticos",
+        icon = icon("exclamation-triangle"),
+        color = "yellow"
+      )
     })
   })
 }
