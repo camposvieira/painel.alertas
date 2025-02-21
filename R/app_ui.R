@@ -17,7 +17,7 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     fluidPage(
       theme = bslib::bs_theme(bootswatch = "minty"), # Tema moderno
-      mod_home_page_ui("home_page")
+      mod_home_page_ui("home_page_1")
     )
   )
 }

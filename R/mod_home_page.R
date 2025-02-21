@@ -1,107 +1,100 @@
-#' home_page UI Function
-#'
-#' @description A shiny Module.
-#'
-#' @param id,input,output,session Internal parameters for {shiny}.
-#'
-#' @noRd
-#'
-#' @importFrom shiny NS tagList
-# UI do módulo
-# R/mod_home_page.R
-# R/mod_home_page.R
-
 library(shiny)
 library(shinydashboard)
-library(bslib) # Para temas modernos com Bootstrap 5
+library(bslib)
 
+
+# UI do módulo
 mod_home_page_ui <- function(id) {
   ns <- NS(id)
   tagList(
-    # Navbar estilo Colorlib
-    tags$nav(
-      class = "navbar navbar-expand-lg navbar-dark bg-primary",
-      style = "padding: 1rem;",
-      tags$a(class = "navbar-brand", href = "#", "Painel de Alertas"),
-      tags$div(
-        class = "collapse navbar-collapse",
-        tags$ul(
-          class = "navbar-nav ml-auto",
-          tags$li(class = "nav-item", tags$a(class = "nav-link", href = "#", "Início")),
-          tags$li(class = "nav-item", tags$a(class = "nav-link", href = "#", "Sobre")),
-          tags$li(class = "nav-item", tags$a(class = "nav-link", href = "#", "Contato"))
-        )
+    # Carregar o CSS personalizado e o script JavaScript
+    tags$head(
+      tags$link(rel = "stylesheet", type = "text/css", href = "https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"),
+      tags$link(rel = "stylesheet", type = "text/css", href = "https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"),
+      tags$script(src = "https://code.jquery.com/jquery-3.6.0.min.js"),
+      tags$script(src = "https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js")
+    ),
+
+    # Barra de navegação horizontal
+    tags$div(
+      class = "navbar",
+      tags$ul(
+        lapply(c("Destaques", "Alertas", "Explorador de Dados", "Monitoramento"), function(label) {
+          tags$li(tags$a(href = paste0("#", tolower(gsub(" ", "_", label))), label, id = paste0("link_", tolower(gsub(" ", "_", label)))))
+        })
       )
     ),
 
-    # Hero Section
-    div(
-      class = "hero bg-light text-center py-5",
-      style = "background-color:#f8f9fa;",
-      h1("Bem-vindo ao Painel de Alertas"),
-      p("Monitoramento de eventos em saúde pública em tempo real."),
-      actionButton(ns("explore_btn"), "Explore Agora", class = "btn btn-primary btn-lg")
+    # Seção Destaques
+    div(class = "section", id = "destaques",
+        h2("Destaques"),
+        p("Resumo das principais informações e métricas em tempo real."),
+        div(class = "autoplay",
+            div("Notícia 1: Descoberta importante em saúde pública!", plotOutput(ns("plot1"), height = "350px")),
+            div("Notícia 2: Diarreia em alta!"),
+            div("Notícia 3: Efeitos do calor em crescimento!"),
+            div("Notícia 4: Queixas sobre pomadas nos olhos aumentaram!"),
+            div("Notícia 5: Covid volta a subir.")
+        ),
+        actionButton(ns("btn_destaques"), "Saiba Mais", class = "btn-custom")
     ),
 
-    # Cards de Métricas Principais
-    fluidRow(
-      column(
-        width = 4,
-        valueBoxOutput(ns("total_alerts"), width = 12)
-      ),
-      column(
-        width = 4,
-        valueBoxOutput(ns("new_cases"), width = 12)
-      ),
-      column(
-        width = 4,
-        valueBoxOutput(ns("critical_events"), width = 12)
-      )
+    # Seção Alertas
+    div(class = "section", id = "alertas",
+        h2("Alertas"),
+        p("Alertas críticos e eventos emergentes na saúde pública."),
+        actionButton(ns("btn_alertas"), "Ver Alertas", class = "btn-custom")
     ),
 
-    # Rodapé
-    tags$footer(
-      class = "text-center text-white py-3",
-      style = "background-color:#2c3e50;",
-      "© 2025 - Painel de Alertas | Desenvolvido por Gabriel"
+    # Seção Explorador
+    div(class = "section", id = "explorador",
+        h2("Explorador de Dados"),
+        p("Ferramentas interativas para analisar os dados de saúde."),
+        actionButton(ns("btn_explorador"), "Explorar Agora", class = "btn-custom")
+    ),
+
+    # Seção Monitoramento
+    div(class = "section", id = "monitoramento",
+        h2("Monitoramento em Tempo Real"),
+        p("Visualizações dinâmicas e acompanhamento contínuo."),
+        actionButton(ns("btn_monitoramento"), "Acompanhar", class = "btn-custom")
     )
   )
 }
 
+# Server do módulo
 mod_home_page_server <- function(id) {
   moduleServer(id, function(input, output, session) {
-    output$total_alerts <- renderValueBox({
-      valueBox(
-        value = "1,234",
-        subtitle = "Alertas Totais",
-        icon = icon("bell"),
-        color = "purple"
-      )
+
+    # Use session$ns diretamente dentro do contexto do módulo
+   # ns <- session$ns  # Atribui a função ns() para o contexto do módulo
+
+    observeEvent(input$btn_destaques, {
+      showModal(modalDialog(title = "Destaques", "Aqui estão os principais destaques de hoje!"))
     })
 
-    output$new_cases <- renderValueBox({
-      valueBox(
-        value = "89",
-        subtitle = "Novos Casos Hoje",
-        icon = icon("heartbeat"),
-        color = "red"
-      )
+    # Garantindo que o gráfico use o namespace corretamente
+    output[[session$ns("plot1")]] <- renderPlot({
+      print("Gráfico sendo gerado...")  # Verifique se aparece no console
+      plot(1:10, 1:10)  # Exemplo simples de gráfico
     })
 
-    output$critical_events <- renderValueBox({
-      valueBox(
-        value = "5",
-        subtitle = "Eventos Críticos",
-        icon = icon("exclamation-triangle"),
-        color = "yellow"
-      )
+    observeEvent(input$btn_alertas, {
+      showModal(modalDialog(title = "Alertas", "Lista de alertas mais recentes em saúde pública."))
+    })
+
+    observeEvent(input$btn_explorador, {
+      showModal(modalDialog(title = "Explorador", "Ferramenta de exploração de dados interativos."))
+    })
+
+    observeEvent(input$btn_monitoramento, {
+      showModal(modalDialog(title = "Monitoramento", "Painel de monitoramento atualizado em tempo real."))
     })
   })
 }
 
-
-## To be copied in the UI
+## To be copiado no UI
 # mod_home_page_ui("home_page_1")
 
-## To be copied in the server
+## To be copiado no server
 # mod_home_page_server("home_page_1")
