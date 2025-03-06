@@ -1,5 +1,5 @@
 default:
-  golem_name: painel_alertas_cie
+  golem_name: painel.alertas
   golem_version: 0.0.0.9000
   app_prod: no
 production:
