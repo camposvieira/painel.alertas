@@ -22,16 +22,32 @@ app_ui <- function(request) {
       fullscreen = TRUE,
       # Sidebar
       sidebar = bs4Dash::dashboardSidebar(
+        status = "info",
         bs4Dash::bs4SidebarMenu(
           bs4Dash::bs4SidebarMenuItem(
-            text = "Home",
-            tabName = "home",
+            text = "Início",
+            tabName = "tab_home",
             icon = icon("home")
           ),
           bs4Dash::bs4SidebarMenuItem(
-            text = "Settings",
-            tabName = "settings",
-            icon = icon("cogs")
+            text = "Panorama",
+            tabName = "tab_panorama",
+            icon = icon("codepen")
+          ),
+          bs4Dash::bs4SidebarMenuItem(
+            text = "Explorador",
+            tabName = "tab_explora",
+            icon = icon("binoculars")
+          ),
+          bs4Dash::bs4SidebarMenuItem(
+            text = "Eventos de Atenção",
+            tabName = "tab_eventos",
+            icon = icon("exclamation-triangle")
+          ),
+          bs4Dash::bs4SidebarMenuItem(
+            text = "Operacional",
+            tabName = "tab_opera",
+            icon = icon("gears")
           )
         )
       ),
@@ -50,14 +66,12 @@ app_ui <- function(request) {
       body = bs4Dash::dashboardBody(
         bs4Dash::bs4TabItems(
           bs4Dash::bs4TabItem(
-            tabName = "home",
-            h2("Welcome to the Home Page"),
-            p("This is a `{bs4Dash}` dashboard integrated with `{golem}`.")
+            tabName = "tab_home",
+            mod_home_page_ui("home_page")
           ),
           bs4Dash::bs4TabItem(
-            tabName = "settings",
-            h2("Settings"),
-            p("Customize your preferences here.")
+            tabName = "tab_panorama",
+            mod_panorama_ui("panorama")
           )
         )
       ),

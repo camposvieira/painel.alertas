@@ -13,6 +13,7 @@ attachment::att_amend_desc()
 
 ## Add modules ----
 golem::add_module(name = "home_page", with_test = TRUE)
+golem::add_module(name = "panorama", with_test = TRUE)
 
 ## Add helper functions ----
 
