@@ -16,6 +16,7 @@ output: github_document
 # `{painel.alertas}`
 
 <!-- badges: start -->
+[![Codecov test coverage](https://codecov.io/gh/camposvieira/painel.alertas/branch/master/graph/badge.svg)](https://app.codecov.io/gh/camposvieira/painel.alertas?branch=master)
 <!-- badges: end -->
 
 ## Installation

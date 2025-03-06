@@ -11,13 +11,59 @@
 # R/app_ui.R
 library(shiny)
 library(bslib)
+library(golem)
 
 app_ui <- function(request) {
   tagList(
     golem_add_external_resources(),
-    fluidPage(
-      theme = bslib::bs_theme(bootswatch = "minty"), # Tema moderno
-      mod_home_page_ui("home_page_1")
+
+    bs4Dash::dashboardPage(
+      title = "Painel de Alertas",
+      fullscreen = TRUE,
+      # Sidebar
+      sidebar = bs4Dash::dashboardSidebar(
+        bs4Dash::bs4SidebarMenu(
+          bs4Dash::bs4SidebarMenuItem(
+            text = "Home",
+            tabName = "home",
+            icon = icon("home")
+          ),
+          bs4Dash::bs4SidebarMenuItem(
+            text = "Settings",
+            tabName = "settings",
+            icon = icon("cogs")
+          )
+        )
+      ),
+
+      # Header
+      header = bs4Dash::dashboardHeader(
+        title = bs4Dash::dashboardBrand(
+          title = "Painel de Alertas",
+          image = "www/CIE_SIMBOLO.png"
+        ),
+        skin = "dark",
+        border=TRUE
+      ),
+
+      # Body
+      body = bs4Dash::dashboardBody(
+        bs4Dash::bs4TabItems(
+          bs4Dash::bs4TabItem(
+            tabName = "home",
+            h2("Welcome to the Home Page"),
+            p("This is a `{bs4Dash}` dashboard integrated with `{golem}`.")
+          ),
+          bs4Dash::bs4TabItem(
+            tabName = "settings",
+            h2("Settings"),
+            p("Customize your preferences here.")
+          )
+        )
+      ),
+
+      controlbar = NULL
     )
   )
+
 }

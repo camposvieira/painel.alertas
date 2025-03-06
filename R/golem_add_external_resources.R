@@ -1,6 +1,6 @@
 # R/golem_add_external_resources.R
 golem_add_external_resources <- function() {
-  add_resource_path(
+  golem::add_resource_path(
     "www",
     app_sys("app/www")
   )

@@ -4,6 +4,9 @@
 # `{painel.alertas}`
 
 <!-- badges: start -->
+
+[![Codecov test
+coverage](https://codecov.io/gh/camposvieira/painel.alertas/branch/master/graph/badge.svg)](https://app.codecov.io/gh/camposvieira/painel.alertas?branch=master)
 <!-- badges: end -->
 
 ## Installation
@@ -30,50 +33,129 @@ This README has been compiled on the
 
 ``` r
 Sys.time()
-#> [1] "2025-03-06 14:28:13 -03"
+#> [1] "2025-03-06 16:12:08 -03"
 ```
 
 Here are the tests results and package coverage:
 
 ``` r
 devtools::check(quiet = TRUE)
-#> ══ Documenting ═════════════════════════════════════════════════════════════════
-#> ℹ Installed roxygen2 version (7.3.1) doesn't match required (7.1.1)
-#> ✖ `check()` will not re-document this package
-#> ── R CMD check results ────────────────────────── painel.alertas 0.0.0.9000 ────
-#> Duration: 2.5s
+#> ℹ Loading painel.alertas
 #> 
-#> ❯ checking whether package ‘painel.alertas’ can be installed ... ERROR
+#> Anexando pacote: 'bslib'
+#> 
+#> 
+#> O seguinte objeto é mascarado por 'package:utils':
+#> 
+#>     page
+#> 
+#> 
+#> 
+#> Anexando pacote: 'shinydashboard'
+#> 
+#> 
+#> O seguinte objeto é mascarado por 'package:graphics':
+#> 
+#>     box
+#> ── R CMD check results ────────────────────────── painel.alertas 0.0.0.9000 ────
+#> Duration: 25.5s
+#> 
+#> ❯ checking tests ...
 #>   See below...
 #> 
-#> ── Install failure ─────────────────────────────────────────────────────────────
+#> ❯ checking code files for non-ASCII characters ... WARNING
+#>   Found the following file with non-ASCII characters:
+#>     R/mod_home_page.R
+#>   Portable packages must use only ASCII characters in their R code and
+#>   NAMESPACE directives, except perhaps in comments.
+#>   Use \uxxxx escapes for other characters.
+#>   Function ‘tools::showNonASCIIfile’ can help in finding non-ASCII
+#>   characters in files.
 #> 
-#> * installing *source* package ‘painel.alertas’ ...
-#> ** using staged installation
-#> ** R
-#> ** inst
-#> ** byte-compile and prepare package for lazy loading
-#> Error in library(shinydashboard) : 
-#>   não há nenhum pacote chamado ‘shinydashboard’
-#> Erro: não foi possível carregar o código R no pacote ‘painel.alertas’
-#> Execução interrompida
-#> ERROR: lazy loading failed for package ‘painel.alertas’
-#> * removing ‘/tmp/Rtmp5eD3S3/file879c55990b01c/painel.alertas.Rcheck/painel.alertas’
+#> ❯ checking for unstated dependencies in examples ... OK
+#>    WARNING
+#>   ‘qpdf’ is needed for checks on size reduction of PDFs
 #> 
-#> 1 error ✖ | 0 warnings ✔ | 0 notes ✔
+#> ❯ checking for future file timestamps ... NOTE
+#>   unable to verify current time
+#> 
+#> ❯ checking DESCRIPTION meta-information ... NOTE
+#>   Campo Authors@R fornece pessoas sem papéis:
+#>     João Morais <joao.tlp@gmail.com>
+#> 
+#> ❯ checking package subdirectories ... NOTE
+#>   Problems with news in ‘NEWS.md’:
+#>   No news entries found.
+#> 
+#> ❯ checking dependencies in R code ... NOTE
+#>   Namespace no campo Imports não importado de: ‘shinydashboard’
+#>     All declared Imports should be used.
+#> 
+#> ❯ checking R code for possible problems ... NOTE
+#>   golem_add_external_resources: no visible global function definition for
+#>     ‘favicon’
+#>   golem_add_external_resources: no visible global function definition for
+#>     ‘bundle_resources’
+#>   Undefined global functions or variables:
+#>     bundle_resources favicon
+#> 
+#> ── Test failures ───────────────────────────────────────────────── testthat ────
+#> 
+#> > # This file is part of the standard setup for testthat.
+#> > # It is recommended that you do not modify it.
+#> > #
+#> > # Where should you do additional test configuration?
+#> > # Learn more about the roles of various files in:
+#> > # * https://r-pkgs.org/testing-design.html#sec-tests-files-overview
+#> > # * https://testthat.r-lib.org/articles/special-files.html
+#> > 
+#> > library(testthat)
+#> > library(painel.alertas)
+#> > 
+#> > test_check("painel.alertas")
+#> Loading required package: shiny
+#> [1] "Gráfico sendo gerado..."
+#> [ FAIL 1 | WARN 0 | SKIP 1 | PASS 13 ]
+#> 
+#> ══ Skipped tests (1) ═══════════════════════════════════════════════════════════
+#> • rlang_is_interactive() is not TRUE (1): 'test-golem-recommended.R:72:5'
+#> 
+#> ══ Failed tests ════════════════════════════════════════════════════════════════
+#> ── Error ('test-golem-recommended.R:2:3'): app ui ──────────────────────────────
+#> Error in `favicon()`: could not find function "favicon"
+#> Backtrace:
+#>     ▆
+#>  1. └─painel.alertas:::app_ui() at test-golem-recommended.R:2:3
+#>  2.   ├─htmltools::tagList(...)
+#>  3.   │ └─rlang::dots_list(...)
+#>  4.   └─painel.alertas:::golem_add_external_resources()
+#>  5.     └─tags$head(...)
+#>  6.       └─rlang::dots_list(...)
+#> 
+#> [ FAIL 1 | WARN 0 | SKIP 1 | PASS 13 ]
+#> Error: Test failures
+#> Execution halted
+#> 
+#> 1 error ✖ | 2 warnings ✖ | 5 notes ✖
 #> Error: R CMD check found ERRORs
 ```
 
 ``` r
 covr::package_coverage()
-#> painel.alertas Coverage: 0.00%
-#> R/app_config.R: 0.00%
-#> R/app_server.R: 0.00%
-#> R/app_ui.R: 0.00%
-#> R/golem_add_external_resources.R: 0.00%
-#> R/golem_utils_server.R: 0.00%
-#> R/golem_utils_ui.R: 0.00%
-#> R/mod_home_page.R: 0.00%
-#> R/mod_test1.R: 0.00%
-#> R/run_app.R: 0.00%
+#> Error: Failure in `/tmp/RtmpLQM6Xk/R_LIBS8ac97137ae80a/painel.alertas/painel.alertas-tests/testthat.Rout.fail`
+#> ════════════════════════════════════════════════════════════════
+#> ── Error ('test-golem-recommended.R:2:3'): app ui ──────────────────────────────
+#> Error in `favicon()`: could not find function "favicon"
+#> Backtrace:
+#>     ▆
+#>  1. └─painel.alertas:::app_ui() at test-golem-recommended.R:2:3
+#>  2.   ├─htmltools::tagList(...)
+#>  3.   │ └─rlang::dots_list(...)
+#>  4.   └─painel.alertas:::golem_add_external_resources()
+#>  5.     └─tags$head(...)
+#>  6.       └─rlang::dots_list(...)
+#> 
+#> [ FAIL 1 | WARN 0 | SKIP 1 | PASS 13 ]
+#> Error: Test failures
+#> Execution halted
 ```

@@ -1,12 +1,12 @@
 /* Estilos gerais do body */
-body {
+/*body {
   background-color: #004080;
   color: white;
   font-family: 'Arial', sans-serif;
 }
 
 /* Barra de navegação - Alinhada à direita */
-.navbar {
+/*.navbar {
   position: fixed;
   top: 20px;
   right: 20px;
