@@ -9,7 +9,9 @@
 #' @importFrom shiny NS tagList
 mod_panorama_ui <- function(id) {
   ns <- NS(id)
-  tagList()
+  tagList(
+    bs4Dash::box("Alertas", status="info", solidHeader = T)
+  )
 }
 
 #' panorama Server Functions

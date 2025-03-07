@@ -12,6 +12,7 @@
 library(shiny)
 library(bslib)
 library(golem)
+library(slickR)
 
 app_ui <- function(request) {
   tagList(
@@ -67,6 +68,7 @@ app_ui <- function(request) {
         bs4Dash::bs4TabItems(
           bs4Dash::bs4TabItem(
             tabName = "tab_home",
+            #h3("Salve")
             mod_home_page_ui("home_page")
           ),
           bs4Dash::bs4TabItem(
